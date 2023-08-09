@@ -1,0 +1,46 @@
+﻿<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container-fluid">
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Photography</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+    
+            <ul class="navbar-nav flex-grow-1">
+                <!-- //get the list that passed from /NavigationMenuViewComponent.cs’(menuItems) -->
+                @foreach (var menuItem in Model)
+                {		// if current object has a DropdownItems propety (the list)
+                    if (menuItem.DropdownItems != null)
+                    {     // render current object's properties (categories as a button, which contains a list)
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                @menuItem.Label
+                            </a>
+                            <!-- //<ul> contains multiple <li> & <a> that were created by foreach loop -->
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <!-- //iterate over current obj's DropdownItems property to create a list (List & Create in a drop-down list)-->
+                                @foreach (var dropdownItem in menuItem.DropdownItems)
+                                {
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="@dropdownItem.Controller" asp-action="@dropdownItem.Action">
+                                            @dropdownItem.Label
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                    else	 // if current object has NO DropdownItems propety
+                    {     // render current object's properties
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="@menuItem.Controller" asp-action="@menuItem.Action">@menuItem.Label</a>
+                        </li>
+                    }
+                }
+            </ul>
+
+            <partial name="_LoginPartial" />
+        </div>
+    </div>
+</nav>
