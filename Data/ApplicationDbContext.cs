@@ -4,7 +4,7 @@ using Photography.Models;
 
 namespace Photography.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public DbSet<Course> Courses { get; set; }  //tell it what models we're using
         public DbSet<Product> Products { get; set; }  //tell it what models we're using
