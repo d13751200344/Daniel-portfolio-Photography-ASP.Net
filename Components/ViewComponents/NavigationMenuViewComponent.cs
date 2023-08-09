@@ -20,7 +20,7 @@ namespace Photography.Components.ViewComponents
                                 new MenuItem { Controller = "Gallery", Action = "Property", Label = "Property"},
 
                             } },
-                new MenuItem { Controller = "Course", Action = "Course", Label = "Course"},
+                new MenuItem { Controller = "Courses", Action = "Index", Label = "Course"},
                 new MenuItem { Controller = "Home", Action = "About", Label = "About"},
                 new MenuItem { Controller = "Home", Action = "Privacy", Label = "Privacy"},
              };

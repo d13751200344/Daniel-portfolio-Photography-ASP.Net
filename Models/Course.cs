@@ -15,7 +15,6 @@ namespace Photography.Models
         public string CourseDescription { get; set; }
 
         [Required(ErrorMessage = "You must provide the course price.")]
-        [Range(1, 999999999, ErrorMessage = "$1~$999999999 is reasonable price range.")]
         public decimal Price { get; set; }
     }
 }
