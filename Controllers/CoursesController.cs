@@ -237,5 +237,34 @@ namespace Photography.Controllers
 
             return View(cart);
         }
+
+
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> DeleteCartItem(int cartItemId) //in the DeleteCartItem form, name = "cartItemId"
+        {
+            // Get logged in user, if no such a user, assign null
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            // Attempt to get the specific user's active cart
+            var cart = await _context.Carts
+                .FirstOrDefaultAsync(cart => cart.UserId == userId && cart.Active == true);
+
+            if (cart == null) return NotFound();
+
+            var cartItem = await _context.CartItems
+                .FirstOrDefaultAsync(cartItem => cartItem.Cart == cart && cartItem.Id == cartItemId);
+
+            if (cartItem != null)
+            {
+                _context.CartItems.Remove(cartItem);	// prepare sql statement
+                await _context.SaveChangesAsync();	// execute it
+
+                return RedirectToAction("ViewMyCart");
+            }
+
+            return NotFound();
+        }
     }
 }
