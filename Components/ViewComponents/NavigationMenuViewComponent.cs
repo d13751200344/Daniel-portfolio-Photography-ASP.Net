@@ -21,6 +21,7 @@ namespace Photography.Components.ViewComponents
 
                             } },
                 new MenuItem { Controller = "Courses", Action = "Index", Label = "Course"},
+                new MenuItem { Controller = "Courses", Action = "ViewMyCart", Label = "Cart", Authorized = true },
                 new MenuItem { Controller = "Home", Action = "About", Label = "About"},
                 new MenuItem { Controller = "Home", Action = "Privacy", Label = "Privacy"},
              };

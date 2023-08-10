@@ -1,0 +1,73 @@
+﻿@model Photography.Models.Cart
+
+@{
+    //if an user view this page with no cart or cartItem(or is removed), response with message
+    if (Model == null || Model.CartItems == null || Model.CartItems.Count == 0)
+    {
+        <div class="alert alert-warning">
+            <p>You must add items to your cart!</p>
+        </div>
+
+        return;
+    }
+}
+
+@{
+    ViewData["Title"] = "Cart Details for " + Model.User.Email;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Course Name</th>
+                <th>Price</th>
+                <th>Subtotal</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var cartItem in Model.CartItems)
+            {
+                var subtotal =  cartItem.Price;
+
+                <tr>
+                    <td>@cartItem.Course.CourseName</td>  <!--as we used `ThenInclude(cartItem => cartItem.Product)`-->
+                    <td>@cartItem.Price</td>
+                    <td>@subtotal</td>
+                    <td>
+                        <form class="d-inline" asp-action="DeleteCartItem">
+                            <input type="hidden" name="cartItemId" value="@cartItem.Id">
+                            <input class="btn btn-danger" type="submit" value="Remove">
+                        </form>
+
+                        <a class="btn btn-secondary" asp-action="Details" asp-route-id="@cartItem.CourseId">
+                            View Product
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+        <tfoot>
+            @{
+                var total = Model.CartItems.Sum(cartItem => cartItem.Price);
+            }
+
+            <tr>
+                <th>Total:</th>
+                <td colspan="3">@total</td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div>
+    <a class="btn btn-success" asp-action="Checkout">Checkout</a>
+    <a class="btn btn-secondary" asp-action="Index">Back to Courses</a>
+</div>

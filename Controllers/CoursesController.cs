@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -169,6 +170,72 @@ namespace Photography.Controllers
         private bool CourseExists(int id)
         {
           return (_context.Courses?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> AddToCart(int courseId) //courseId passed from <form>
+        {   // Enable users to add products to carts
+
+            // Get logged-in user's id; if no such a user, assign null
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            // Attempt to get the specific user's active cart
+            var cart = await _context.Carts
+                .FirstOrDefaultAsync(cart => cart.UserId == userId && cart.Active == true);
+            // if the user don't have a cart, we create one
+            if (cart == null)
+            {
+                cart = new Cart { UserId = userId };
+                await _context.AddAsync(cart);  //add new cart to database (prepare SQL statement)
+                await _context.SaveChangesAsync();  //execute the SQL statement
+            }
+
+            // find the course
+            var course = await _context.Courses
+                .FirstOrDefaultAsync(course => course.Id == courseId);
+
+            // if no product
+            if (course == null)
+            {
+                return NotFound();  //404 page
+            }
+
+            // create a cartItem object
+            var cartItem = new Models.CartItem
+            {
+                Cart = cart,
+                Course = course,
+                Price = course.Price,
+            };
+
+            // If valid, do all the goodness (see if we made a stable model or not)
+            if (ModelState.IsValid)
+            {
+                await _context.AddAsync(cartItem);  //add new cart to database (prepare SQL statement)
+                await _context.SaveChangesAsync();  //execute the SQL statement
+                return RedirectToAction("ViewMyCart");  //redirect users to ViewMyCart.cshtml
+            }
+            // otherwise GTFO
+            return NotFound();
+        }
+
+
+
+        [Authorize]
+        public async Task<IActionResult> ViewMyCart()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var cart = await _context.Carts
+                .Include(cart => cart.User)   //access cart.User
+                .Include(cart => cart.CartItems)   //access cart.CartItems
+                .ThenInclude(cartItem => cartItem.Course)  //joining the Course table to each of the cart items
+                .FirstOrDefaultAsync(cart => cart.UserId == userId && cart.Active == true);
+
+            return View(cart);
         }
     }
 }
