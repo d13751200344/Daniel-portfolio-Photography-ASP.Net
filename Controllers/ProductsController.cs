@@ -159,5 +159,26 @@ namespace Photography.Controllers
         {
           return (_context.Products?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteSelected(int[] selectedPhotos)
+        {
+            if (selectedPhotos != null && selectedPhotos.Length > 0)
+            {
+                var productsToDelete = await _context.Products.Where(p => selectedPhotos.Contains(p.Id)).ToListAsync();
+
+                if (productsToDelete.Any())
+                {
+                    _context.Products.RemoveRange(productsToDelete);
+                    await _context.SaveChangesAsync();
+                }
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
