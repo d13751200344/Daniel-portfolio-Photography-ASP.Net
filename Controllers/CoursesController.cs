@@ -10,16 +10,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Photography.Data;
 using Photography.Models;
+using Stripe;
+using Stripe.Checkout;
 
 namespace Photography.Controllers
 {
     public class CoursesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private IConfiguration _configuration;  //property for the parameter that will be passed in
 
-        public CoursesController(ApplicationDbContext context)
+
+        public CoursesController(ApplicationDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;  //get the parameter that is passed here
         }
 
         // GET: Courses
@@ -299,6 +304,64 @@ namespace Photography.Controllers
 
             // return the order object to CheckOut.cshtml
             return View(order);
+        }
+
+
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Payment(string shippingAddress, PaymentMethods paymentMethod)
+        {
+            //get userID
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            //get cart data in database > includes cartItems > find the right cart(userId & active)
+            var cart = await _context.Carts
+                .Include(cart => cart.CartItems)
+                .FirstOrDefaultAsync(cart => cart.UserId == userId && cart.Active == true);
+
+            if (cart == null) return NotFound();
+
+            //Add order data to the session
+            HttpContext.Session.SetString("ShippingAddress", shippingAddress);
+            HttpContext.Session.SetString("PaymentMethod", paymentMethod.ToString());
+
+            //Set Stripe API key
+            StripeConfiguration.ApiKey = _configuration.GetSection("Stripe")["SecretKey"];
+
+            // Create our Stripe options
+            var options = new Stripe.Checkout.SessionCreateOptions
+            {
+                LineItems = new List<SessionLineItemOptions> {
+                    new SessionLineItemOptions
+                    {
+                        PriceData = new SessionLineItemPriceDataOptions
+                        {
+                            UnitAmount = (long)(cart.CartItems.Sum(cartItem => cartItem.Price) * 100),
+                            Currency = "cad",
+                            ProductData = new SessionLineItemPriceDataProductDataOptions
+                            {
+                                Name = "Photography Course Purchase",
+                            },
+                        },
+                        Quantity = 1,
+                    },
+                },
+                PaymentMethodTypes = new List<string>
+                {
+                    "card"
+                },
+                Mode = "payment",
+                SuccessUrl = "https://" + Request.Host + "/Shop/SaveOrder",
+                CancelUrl = "https://" + Request.Host + "/Shop/ViewMyCart",
+            };
+
+            //use the session service that Stripe offers
+            var service = new Stripe.Checkout.SessionService();
+            Stripe.Checkout.Session session = service.Create(options);
+
+            Response.Headers.Add("Location", session.Url);
+            return new StatusCodeResult(303);
         }
     }
 }
