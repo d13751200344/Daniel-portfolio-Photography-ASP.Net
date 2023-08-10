@@ -22,6 +22,20 @@ namespace Photography
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
 
+
+            // Enable Google Auth
+            builder.Services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    // Access Google Auth section of appsettings.Development.json, therefore, 'googleAuth' will store the ClientID & Client Secret
+                    IConfigurationSection googleAuth = builder.Configuration.GetSection("Authentication:Google");
+
+                    // Read Google API Key values from config
+                    options.ClientId = googleAuth["ClientId"];
+                    options.ClientSecret = googleAuth["ClientSecret"];
+                });
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
