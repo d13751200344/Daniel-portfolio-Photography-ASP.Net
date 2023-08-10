@@ -444,5 +444,40 @@ namespace Photography.Controllers
 
             return View(orders);
         }
+
+
+
+        [Authorize]
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> AllOrders()
+        {
+            // Get all orders
+            var allorders = await _context.Orders
+                .OrderByDescending(allorder => allorder.Id)
+                .ToListAsync();
+
+            if (allorders == null) return NotFound();
+
+            return View(allorders);
+        }
+
+
+
+        [Authorize]
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> AllOrdersDetails(string userId, int orderId)
+        {
+            // Get the UserId that shows in UserId column
+            var order = await _context.Orders
+                .Include(order => order.User)  //loads the related User entity associated with the order.
+                .Include(order => order.Cart)
+                .ThenInclude(cart => cart.CartItems)
+                .ThenInclude(cartItem => cartItem.Course)
+                .FirstOrDefaultAsync(order => order.UserId == userId && order.Id == orderId);
+
+            if (order == null) return NotFound();
+
+            return View(order);
+        }
     }
 }

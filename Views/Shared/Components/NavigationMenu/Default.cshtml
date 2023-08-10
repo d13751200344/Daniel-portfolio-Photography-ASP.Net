@@ -16,6 +16,11 @@
 
                     if (menuItem.Authorized.GetValueOrDefault() && !User.Identity.IsAuthenticated) continue;
 
+                    if (User.Identity.IsAuthenticated && menuItem.AllowedRoles != null && menuItem.AllowedRoles.Count > 0)
+                    {
+                        if (menuItem.AllowedRoles.Find(role => User.IsInRole(role)) == null) continue;
+                    }
+
                     if (menuItem.DropdownItems != null)
                     {
                         <li class="nav-item dropdown">

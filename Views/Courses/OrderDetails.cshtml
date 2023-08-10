@@ -52,4 +52,9 @@
 
 <div>
     <a class="btn btn-secondary" asp-action="Index">Back to Courses</a>
+
+    @if (User.IsInRole("Administrator"))
+    {
+        <a class="btn btn-secondary" asp-action="AllOrders">Back to All Orders</a>
+    }
 </div>

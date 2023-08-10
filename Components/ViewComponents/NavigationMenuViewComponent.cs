@@ -25,6 +25,7 @@ namespace Photography.Components.ViewComponents
                 new MenuItem { Controller = "Home", Action = "Privacy", Label = "Privacy"},
                 new MenuItem { Controller = "Courses", Action = "ViewMyCart", Label = "Cart", Authorized = true },
                 new MenuItem { Controller = "Courses", Action = "Orders", Label = "My Orders", Authorized = true },
+                new MenuItem { Controller = "Courses", Action = "AllOrders", Label = "All Orders", Authorized = true, AllowedRoles = new List<string> { "Administrator" } },
              };
 
             return View(menuItems);
