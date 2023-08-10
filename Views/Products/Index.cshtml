@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Photography.Models.Product>
+
+@{
+    ViewData["Title"] = "Products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (User.IsInRole("Administrator"))
+{
+    <a class="btn btn-primary my-3" asp-action="Create">Upload</a>
+
+    <form method="post" asp-action="DeleteSelected" onsubmit="return confirm('Are you sure you want to delete the selected photos?');">
+        @foreach (var item in Model)
+        {
+            <div>
+                <input type="checkbox" name="selectedPhotos" value="@item.Id" /> @* Checkbox for selection *@
+                @Html.DisplayFor(modelItem => item.Photo)
+            </div>
+        }
+        <button type="submit" class="btn btn-danger">Delete Selected</button>
+    </form>
+}
+
+
+@foreach (var item in Model)
+{
+    <div>
+        <img src="@Html.DisplayFor(modelItem => item.Photo)" />
+    </div>
+}

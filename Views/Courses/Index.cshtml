@@ -10,9 +10,7 @@
 
 @if (User.IsInRole("Administrator"))
 {    
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
 }
 
 <table class="table">

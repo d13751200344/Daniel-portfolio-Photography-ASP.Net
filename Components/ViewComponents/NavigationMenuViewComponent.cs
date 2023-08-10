@@ -13,11 +13,11 @@ namespace Photography.Components.ViewComponents
                 new MenuItem { Controller = "Gallery", Action = "Index", Label = "Gallery",
                         DropdownItems = new List<MenuItem>
                             { 
-                                new MenuItem { Controller = "Gallery", Action = "Product", Label = "Product"},
-                                new MenuItem { Controller = "Gallery", Action = "Service", Label = "Service"},
-                                new MenuItem { Controller = "Gallery", Action = "Food", Label = "Food"},
-                                new MenuItem { Controller = "Gallery", Action = "Wedding", Label = "Wedding"},
-                                new MenuItem { Controller = "Gallery", Action = "Property", Label = "Property"},
+                                new MenuItem { Controller = "Products", Action = "Index", Label = "Product"},
+                                new MenuItem { Controller = "Services", Action = "Index", Label = "Service"},
+                                new MenuItem { Controller = "Foods", Action = "Index", Label = "Food"},
+                                new MenuItem { Controller = "Weddings", Action = "Index", Label = "Wedding"},
+                                new MenuItem { Controller = "Property", Action = "Index", Label = "Property"},
 
                             } },
                 new MenuItem { Controller = "Courses", Action = "Index", Label = "Course"},

@@ -6,11 +6,7 @@ namespace Photography.Models
     {
         public int Id { get; set; }
 
-        public string? Name { get; set; }
-
-        public string? Description { get; set; }
-
-        [Required()]
+        [Required(ErrorMessage = "Photo uploading required.")]
         public string Photo { get; set; }
 
 

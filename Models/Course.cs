@@ -14,7 +14,8 @@ namespace Photography.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "You must provide course description.")]
         public string CourseDescription { get; set; }
 
-        [Required(ErrorMessage = "You must provide the course price.")]
+        [Required(ErrorMessage = "A reasonable price is necessary.")]
+        [Range(0, 999999)]
         public decimal Price { get; set; }
     }
 }
