@@ -44,8 +44,17 @@
             </td>
             <td>
                     <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                    
-                    <a class="btn btn-primary" asp-controller="Carts" asp-action="AddToCart" asp-route-id="@item.Id">Add to Cart</a>
+
+                    <!--//add to cart link: a mutable action, a post request-->
+                    <form class="d-inline" asp-action="AddToCart">
+                        <input type="hidden" name="courseId" value="@item.Id" />
+
+                        <input type="submit" value="Add To Cart" class="btn btn-primary" />
+                    </form>
+
+                    <!--
+                        <a class="btn btn-primary" asp-controller="Carts" asp-action="AddToCart" asp-route-id="@item.Id">Add to Cart</a>
+                    --> 
                     
                     @if (User.IsInRole("Administrator"))
                     {

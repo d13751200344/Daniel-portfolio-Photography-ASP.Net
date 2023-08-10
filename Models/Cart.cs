@@ -8,6 +8,9 @@
         public string UserId { get; set; }
 
 
+        // To toggle the status of carts. When it's instantiated, it's active by default.
+        public bool Active { get; set; } = true;
+
 
         /* Navigation property: relationship to parent (1:1) ; 
         ? means that the 'User' property can either hold a valid reference to a 'User' object or be null */
