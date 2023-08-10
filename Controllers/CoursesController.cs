@@ -352,8 +352,8 @@ namespace Photography.Controllers
                     "card"
                 },
                 Mode = "payment",
-                SuccessUrl = "https://" + Request.Host + "/Shop/SaveOrder",
-                CancelUrl = "https://" + Request.Host + "/Shop/ViewMyCart",
+                SuccessUrl = "https://" + Request.Host + "/Courses/SaveOrder",
+                CancelUrl = "https://" + Request.Host + "/Courses/ViewMyCart",
             };
 
             //use the session service that Stripe offers
@@ -362,6 +362,87 @@ namespace Photography.Controllers
 
             Response.Headers.Add("Location", session.Url);
             return new StatusCodeResult(303);
+        }
+
+
+
+
+        //Save the order and show it once users have done their purchasing
+        public async Task<IActionResult> SaveOrder()
+        {
+            //get userID
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            //get cart data in database > includes cartItems > find the right cart(userId & active)
+            var cart = await _context.Carts
+                .Include(cart => cart.CartItems)
+                .FirstOrDefaultAsync(cart => cart.UserId == userId && cart.Active == true);
+
+            //get our data out of the session
+            var paymentMethod = HttpContext.Session.GetString("PaymentMethod");
+            var shippingAddress = HttpContext.Session.GetString("ShippingAddress");
+
+            var order = new Order
+            {
+                UserId = userId,
+                Cart = cart,
+                Total = cart.CartItems.Sum(cartItem => cartItem.Price),
+                ShippingAddress = shippingAddress,
+                PaymentMethod = (PaymentMethods)Enum.Parse(typeof(PaymentMethods), paymentMethod),
+                PaymentReceived = true,
+            };
+
+            //store data of order in database
+            await _context.AddAsync(order);
+            await _context.SaveChangesAsync();
+
+            //After storage, make cart.Active = false because it has been checked out
+            cart.Active = false;
+            _context.Update(cart);
+            await _context.SaveChangesAsync();
+
+            //Then redirect users to OrderDetails page and pass the order.Id as an argument
+            return RedirectToAction("OrderDetails", new { id = order.Id });
+            // this will cooperate with the method below
+        }
+
+
+
+        // OrderDetails method
+        [Authorize]
+        public async Task<IActionResult> OrderDetails(int id)
+        {
+            // Get logged in user, if no such a user, assign null
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var order = await _context.Orders
+                .Include(order => order.User)  //loads the related User entity associated with the order.
+                .Include(order => order.Cart)
+                .ThenInclude(cart => cart.CartItems)
+                .ThenInclude(cartItem => cartItem.Course)
+                .FirstOrDefaultAsync(order => order.UserId == userId && order.Id == id);
+
+            if (order == null) return NotFound();
+
+            return View(order);
+        }
+
+
+
+        [Authorize]
+        public async Task<IActionResult> Orders()
+        {
+            // Get logged in user, if no such a user, assign null
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var orders = await _context.Orders
+                .OrderByDescending(order => order.Id)
+                .Where(order => order.UserId == userId)
+                .ToListAsync();
+
+            if (orders == null) return NotFound();
+
+            return View(orders);
         }
     }
 }

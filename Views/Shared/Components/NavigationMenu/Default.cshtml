@@ -1,4 +1,6 @@
-﻿<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+﻿@model List<MenuItem>
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
     <div class="container-fluid">
         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Photography</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -11,8 +13,11 @@
                 <!-- //get the list that passed from /NavigationMenuViewComponent.cs’(menuItems) -->
                 @foreach (var menuItem in Model)
                 {		// if current object has a DropdownItems propety (the list)
+
+                    if (menuItem.Authorized.GetValueOrDefault() && !User.Identity.IsAuthenticated) continue;
+
                     if (menuItem.DropdownItems != null)
-                    {     // render current object's properties (categories as a button, which contains a list)
+                    {
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 @menuItem.Label
