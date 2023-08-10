@@ -266,5 +266,39 @@ namespace Photography.Controllers
 
             return NotFound();
         }
+
+
+
+
+        [Authorize]
+        public async Task<IActionResult> Checkout()
+        {
+            // Get logged in user, if no such a user, assign null
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var cart = await _context.Carts
+                .Include(cart => cart.User)  //access cart.User
+                .Include(cart => cart.CartItems)  //access cart.CartItems
+                .ThenInclude(cartItem => cartItem.Course)  //joining the Course tables to each of the cart items
+                .FirstOrDefaultAsync(cart => cart.UserId == userId && cart.Active == true);
+            // Attempt to get the specific user's active cart
+
+            //make a new Order object
+            var order = new Models.Order
+            {
+                UserId = userId,
+                Cart = cart,
+                Total = cart.CartItems.Sum(cartItem => cartItem.Price),
+                ShippingAddress = "",
+                PaymentMethod = Models.PaymentMethods.VISA,
+            };
+
+            //get the enum valuse list in "Order.cs" and assign it to ViewData["PaymentMethods"]
+            //this will be passed to Checkout view
+            ViewData["PaymentMethods"] = new SelectList(Enum.GetValues(typeof(PaymentMethods)));
+
+            // return the order object to CheckOut.cshtml
+            return View(order);
+        }
     }
 }
