@@ -1,15 +1,20 @@
 ﻿@model IEnumerable<Photography.Models.Course>
 
 @{
-    ViewData["Title"] = "Knowing How To Take a Picture";
+    ViewData["Title"] = "Courses";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>@ViewData["Title"]</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
+@if (User.IsInRole("Administrator"))
+{    
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -38,9 +43,15 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    
+                    <a class="btn btn-primary" asp-controller="Carts" asp-action="AddToCart" asp-route-id="@item.Id">Add to Cart</a>
+                    
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"> Edit </a>
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"> Delete </a>
+                    }
             </td>
         </tr>
 }

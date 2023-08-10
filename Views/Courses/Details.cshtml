@@ -1,11 +1,11 @@
 ﻿@model Photography.Models.Course
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Details of '" + Model.CourseName + "' Course";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>@ViewData["Title"]</h1>
 
 <div>
     <h4>Course</h4>
@@ -32,6 +32,10 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @if (User.IsInRole("Administrator"))
+    {
+        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model?.Id"> Edit </a>
+    }
+    <a class="btn btn-primary" asp-controller="Carts" asp-action="AddToCart" asp-route-id="@Model?.Id">Add to Cart</a>
+    <a class="btn btn-secondary" asp-action="Index">Back to List</a>
 </div>
