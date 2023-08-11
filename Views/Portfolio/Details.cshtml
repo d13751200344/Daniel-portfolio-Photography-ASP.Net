@@ -1,0 +1,51 @@
+﻿@model Photography.Models.Gallery
+
+@{
+    ViewData["Title"] = "Photos of " + Model.GalleryName;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Photos.FirstOrDefault().Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Photos.FirstOrDefault().Caption)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Photos.FirstOrDefault().Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Photos.FirstOrDefault().Gallery)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Photos) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Caption)
+            </td>
+            <td>
+                
+                <partial name="_PhotoImage" model="item" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gallery.GalleryName)
+            </td>
+            <td>
+                <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id">Details</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

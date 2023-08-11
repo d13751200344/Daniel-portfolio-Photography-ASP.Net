@@ -19,6 +19,7 @@ namespace Photography.Components.ViewComponents
             var menuItems = new List<MenuItem>
             {
                 new MenuItem { Controller = "Home", Action = "Index", Label = "Home"},
+                new MenuItem { Controller = "Portfolio", Action = "Index", Label = "Portfolio"},
                 new MenuItem { Controller = "Galleries", Action = "Index", Label = "Galleries", Authorized = true, AllowedRoles = new List<string> { "Administrator" }},
                 new MenuItem { Controller = "Photos", Action = "Index", Label = "Photos", Authorized = true, AllowedRoles = new List<string> { "Administrator" }},
                 new MenuItem { Controller = "Gallery", Action = "Index", Label = "Portfolio",
@@ -38,7 +39,7 @@ namespace Photography.Components.ViewComponents
             // Create menu items for each gallery
             foreach (var gallery in galleries)
             {
-                menuItems[3].DropdownItems.Add(new MenuItem
+                menuItems[4].DropdownItems.Add(new MenuItem
                 {
                     Controller = "Galleries", // Set the appropriate controller
                     Action = "Index",      // Set the appropriate action
