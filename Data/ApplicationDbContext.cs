@@ -7,7 +7,9 @@ namespace Photography.Data
     public class ApplicationDbContext : IdentityDbContext<User>
     {
         public DbSet<Course> Courses { get; set; }  //tell it what models we're using
-        public DbSet<Product> Products { get; set; }  //tell it what models we're using
+        public DbSet<Gallery> Gallery { get; set; }  //tell it what models we're using
+        public DbSet<Photo> Photos { get; set; }  //tell it what models we're using
+
 
 
         public DbSet<Cart> Carts { get; set; }

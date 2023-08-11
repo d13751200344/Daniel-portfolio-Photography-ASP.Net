@@ -295,7 +295,7 @@ namespace Photography.Data.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("Photography.Models.Product", b =>
+            modelBuilder.Entity("Photography.Models.Photo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -303,18 +303,23 @@ namespace Photography.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("GalleryId")
+                    b.Property<string>("Caption")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("GalleryId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Photo")
-                        .IsRequired()
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("GalleryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Photos");
                 });
 
             modelBuilder.Entity("Photography.Models.User", b =>
@@ -486,11 +491,13 @@ namespace Photography.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Photography.Models.Product", b =>
+            modelBuilder.Entity("Photography.Models.Photo", b =>
                 {
                     b.HasOne("Photography.Models.Gallery", "Gallery")
-                        .WithMany("Products")
-                        .HasForeignKey("GalleryId");
+                        .WithMany("Photos")
+                        .HasForeignKey("GalleryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Gallery");
                 });
@@ -504,7 +511,7 @@ namespace Photography.Data.Migrations
 
             modelBuilder.Entity("Photography.Models.Gallery", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("Photos");
                 });
 
             modelBuilder.Entity("Photography.Models.User", b =>

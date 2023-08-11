@@ -10,87 +10,89 @@ using Photography.Models;
 
 namespace Photography.Controllers
 {
-    public class ProductsController : Controller
+    public class GalleriesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ProductsController(ApplicationDbContext context)
+        public GalleriesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Products
+        // GET: Galleries
         public async Task<IActionResult> Index()
-        {
-              return _context.Products != null ? 
-                          View(await _context.Products.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Products'  is null.");
+        {     
+              return _context.Gallery != null ? 
+                          View(await _context.Gallery
+                          .OrderBy(gallery=>gallery.Id)  //sort Gallery
+                          .ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.Gallery'  is null.");
         }
 
-        // GET: Products/Details/5
+        // GET: Galleries/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Products == null)
+            if (id == null || _context.Gallery == null)
             {
                 return NotFound();
             }
 
-            var product = await _context.Products
+            var gallery = await _context.Gallery
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
+            if (gallery == null)
             {
                 return NotFound();
             }
 
-            return View(product);
+            return View(gallery);
         }
 
-        // GET: Products/Create
+        // GET: Galleries/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Products/Create
+        // POST: Galleries/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Photo")] Product product)
+        public async Task<IActionResult> Create([Bind("Id,GalleryName,Description")] Gallery gallery)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(product);
+                _context.Add(gallery);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(gallery);
         }
 
-        // GET: Products/Edit/5
+        // GET: Galleries/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Products == null)
+            if (id == null || _context.Gallery == null)
             {
                 return NotFound();
             }
 
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
+            var gallery = await _context.Gallery.FindAsync(id);
+            if (gallery == null)
             {
                 return NotFound();
             }
-            return View(product);
+            return View(gallery);
         }
 
-        // POST: Products/Edit/5
+        // POST: Galleries/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Photo")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,GalleryName,Description")] Gallery gallery)
         {
-            if (id != product.Id)
+            if (id != gallery.Id)
             {
                 return NotFound();
             }
@@ -99,12 +101,12 @@ namespace Photography.Controllers
             {
                 try
                 {
-                    _context.Update(product);
+                    _context.Update(gallery);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.Id))
+                    if (!GalleryExists(gallery.Id))
                     {
                         return NotFound();
                     }
@@ -115,70 +117,49 @@ namespace Photography.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(gallery);
         }
 
-        // GET: Products/Delete/5
+        // GET: Galleries/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Products == null)
+            if (id == null || _context.Gallery == null)
             {
                 return NotFound();
             }
 
-            var product = await _context.Products
+            var gallery = await _context.Gallery
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
+            if (gallery == null)
             {
                 return NotFound();
             }
 
-            return View(product);
+            return View(gallery);
         }
 
-        // POST: Products/Delete/5
+        // POST: Galleries/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Products == null)
+            if (_context.Gallery == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Products'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Gallery'  is null.");
             }
-            var product = await _context.Products.FindAsync(id);
-            if (product != null)
+            var gallery = await _context.Gallery.FindAsync(id);
+            if (gallery != null)
             {
-                _context.Products.Remove(product);
+                _context.Gallery.Remove(gallery);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProductExists(int id)
+        private bool GalleryExists(int id)
         {
-          return (_context.Products?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
-
-
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteSelected(int[] selectedPhotos)
-        {
-            if (selectedPhotos != null && selectedPhotos.Length > 0)
-            {
-                var productsToDelete = await _context.Products.Where(p => selectedPhotos.Contains(p.Id)).ToListAsync();
-
-                if (productsToDelete.Any())
-                {
-                    _context.Products.RemoveRange(productsToDelete);
-                    await _context.SaveChangesAsync();
-                }
-            }
-
-            return RedirectToAction(nameof(Index));
+          return (_context.Gallery?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

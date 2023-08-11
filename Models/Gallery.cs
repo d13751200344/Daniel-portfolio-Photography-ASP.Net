@@ -15,6 +15,6 @@ namespace Photography.Models
 
 
         // navigation property
-        public List<Product>? Products { get; set; } 
+        public List<Photo>? Photos { get; set; } 
     }
 }
