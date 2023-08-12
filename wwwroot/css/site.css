@@ -1,10 +1,10 @@
 html {
-  font-size: 14px;
+    font-size: 18px;
 }
 
 @media (min-width: 768px) {
   html {
-    font-size: 16px;
+    font-size: 18px;
   }
 }
 
@@ -13,10 +13,519 @@ html {
   min-height: 100%;
 }
 
+.navpho {
+    margin-bottom: 25px
+}
+
+.navbarbrand {
+  color: royalblue;
+  font-size: 25px;
+  margin-right: 20px;
+  text-decoration: none;
+  font-weight:bold;
+}
+
+li:hover {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+li:focus {
+    text-shadow: 1px 1px 2px lightblue;
+    font-weight: bold;
+}
+
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+.btn 
+{
+    margin: 10px;
 }
 
 .img-thumbnail {
-    max-width: 150px;
+    width: 350px;
+    height: auto;
+}
+
+
+div.wrapper 
+{
+    width: 90vw;
+}
+
+ul.imgWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    height: 1300px;
+    list-style: none;
+}
+
+
+li.img {
+    position: relative;
+    width: calc(100% / 3);
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 2vh;
+    padding: 15px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #022930;
+}
+
+div.footerdiv {
+    min-height: 1%;
+}
+
+    div.footerdiv p {
+        padding: 5px;
+        color: #f9f9f9;
+    }
+
+
+/* for Home */
+main section.background-img {
+    min-height: 80vh;
+    background-image: url("/images/Home/design.jpg");
+    background-size: cover;
+    background-position: center;
+    transition: all 0.7s ease;
+    position: relative;
+    z-index: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main section.background-img div.filter {
+        background-color: rgba(0, 0, 0, 0.4);
+        width: 100%;
+        min-height: 80vh;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+}
+
+main section.background-img div.slider {
+        display: flex;
+        flex-direction: column;
+}
+
+main section.background-img div.slider h3 {
+            color: #f8f8f8;
+            font-size: 3.5rem;
+            text-align: center;
+            margin: 0 1.5rem;
+            letter-spacing: 0.2rem;
+}
+
+.cutom-container {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+}
+
+div.container {
+    margin-top: 25px;
+    margin-bottom: 50px;
+}
+
+section.aboutme div p {
+    padding: 10px;
+}
+section.aboutme div p:last-child {
+    margin-bottom: 50px;
+}
+
+
+/* for Course*/
+section.about_background-img {
+    min-height: 60vh;
+    background-image: url("/images/WebDesign/CourseBGImg.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    transition: all 0.7s ease;
+    position: relative;
+    z-index: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+section.about_background-img div.filter {
+        background-color: rgba(0, 0, 0, 0.4);
+        width: 100%;
+        min-height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+
+section.about_background-img h1 {
+        color: #f8f8f8;
+        font-size: 4rem;
+        text-align: center;
+        margin: 0 1.5rem;
+        letter-spacing: 0.2rem;
+    }
+
+/* for privacy */
+section.privay_background-img {
+    min-height: 60vh;
+    background-image: url("/images/WebDesign/PrivacyBGImg.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    transition: all 0.7s ease;
+    position: relative;
+    z-index: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    section.privay_background-img div.filter {
+        background-color: rgba(0, 0, 0, 0.4);
+        width: 100%;
+        min-height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+
+    section.privay_background-img h1 {
+        color: #f8f8f8;
+        font-size: 4rem;
+        text-align: center;
+        margin: 0 1.5rem;
+        letter-spacing: 0.2rem;
+    }
+
+
+/* for Contact */
+main section.contact_background-img {
+    min-height: 100vh;
+    background-image: url("/images/WebDesign/ContactEquipment.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    transition: all 0.7s ease;
+    position: relative;
+    z-index: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    main section.contact_background-img div.filter {
+        background-color: rgba(0, 0, 0, 0.4);
+        width: 100%;
+        min-height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+
+    main section.contact_background-img div.contact-content {
+        display: flex;
+        justify-content: center;
+        flex-direction: row-reverse;
+    }
+
+        main section.contact_background-img div.contact-content div.form {
+            position: relative;
+            top: 2rem;
+            margin: 1rem;
+            width: 50vw;
+        }
+
+            main section.contact_background-img div.contact-content div.form fieldset {
+                display: flex;
+                flex-direction: column;
+                margin: 1rem;
+                padding: 1rem;
+                border: none;
+                border-radius: 0.5rem;
+                min-width: 10rem;
+            }
+
+                main section.contact_background-img div.contact-content div.form fieldset form {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                    main
+                    section.contact_background-img
+                    div.contact-content
+                    div.form
+                    fieldset
+                    form
+                    label {
+                        display: block;
+                        margin-top: 1rem;
+                    }
+
+                        main
+                        section.contact_background-img
+                        div.contact-content
+                        div.form
+                        fieldset
+                        form
+                        label:first-of-type {
+                            margin-top: 0;
+                        }
+
+                    main
+                    section.contact_background-img
+                    div.contact-content
+                    div.form
+                    fieldset
+                    form
+                    input {
+                        padding: 0.5rem;
+                        border: solid 0.1rem #f8f8f8;
+                        width: 25rem;
+                    }
+
+                    main
+                    section.contact_background-img
+                    div.contact-content
+                    div.form
+                    fieldset
+                    form
+                    textarea {
+                        min-height: 5rem;
+                        min-width: 12rem;
+                        width: 25rem;
+                        height: 10rem;
+                        padding: 0.5rem;
+                        border: solid 0.1rem #0e0e0e;
+                    }
+
+                    main
+                    section.contact_background-img
+                    div.contact-content
+                    div.form
+                    fieldset
+                    form
+                    button {
+                        display: block;
+                        margin-top: 0.5rem;
+                        padding: 0.5rem;
+                        width: 25rem;
+                        color: #f8f8f8;
+                        background-color: orange;
+                        border-radius: 5%;
+                        font-family: "Dancing Script", cursive;
+                    }
+
+                        main
+                        section.contact_background-img
+                        div.contact-content
+                        div.form
+                        fieldset
+                        form
+                        button:hover {
+                            border: solid 0.1rem rgb(188, 105, 50);
+                            background-color: rgb(236, 150, 65);
+                        }
+
+        main section.contact_background-img div.contact-content div.contact_intro {
+            margin: 1rem;
+            width: 40vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+            main section.contact_background-img div.contact-content div.contact_intro h1 {
+                font-size: 3rem;
+                color: #f8f8f8;
+                margin: 1rem 2rem;
+            }
+
+            main section.contact_background-img div.contact-content div.contact_intro h4 {
+                font-size: 1.7rem;
+                color: #f8f8f8;
+                margin: 0 2rem;
+            }
+
+            main section.contact_background-img div.contact-content div.contact_intro p {
+                font-size: 1.2rem;
+                color: #f8f8f8;
+                margin: 1rem 2rem;
+            }
+
+
+/* for ViewMyCart */
+section.viewMyCart_background-img {
+    min-height: 60vh;
+    background-image: url("/images/WebDesign/ViewMyCartBGImg.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    transition: all 0.7s ease;
+    position: relative;
+    z-index: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    section.viewMyCart_background-img div.filter {
+        background-color: rgba(0, 0, 0, 0.4);
+        width: 100%;
+        min-height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+
+    section.viewMyCart_background-img h1 {
+        color: #f8f8f8;
+        font-size: 4rem;
+        text-align: center;
+        margin: 0 1.5rem;
+        letter-spacing: 0.2rem;
+    }
+div.container div h1 {
+    margin-top: 2.5rem;
+}
+
+
+/* for orders */
+section.orders_background-img {
+    min-height: 60vh;
+    background-image: url("/images/WebDesign/MyOrdersBGImg.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    transition: all 0.7s ease;
+    position: relative;
+    z-index: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    section.orders_background-img div.filter {
+        background-color: rgba(0, 0, 0, 0.4);
+        width: 100%;
+        min-height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+
+    section.orders_background-img h1 {
+        color: #f8f8f8;
+        font-size: 4rem;
+        text-align: center;
+        margin: 0 1.5rem;
+        letter-spacing: 0.2rem;
+    }
+    div.container table{
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+}
+
+
+/* for Checkout */
+section.checkout_background-img {
+    min-height: 60vh;
+    background-image: url("/images/WebDesign/CheckoutBGImg.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    transition: all 0.7s ease;
+    position: relative;
+    z-index: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    section.checkout_background-img div.filter {
+        background-color: rgba(0, 0, 0, 0.4);
+        width: 100%;
+        min-height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+
+    section.checkout_background-img h1 {
+        color: #f8f8f8;
+        font-size: 4rem;
+        text-align: center;
+        margin: 0 1.5rem;
+        letter-spacing: 0.2rem;
+    }
+
+div.container h1 {
+    margin-top: 2.5rem;
+}
+
+
+
+/* for OrderDetails */
+section.orderDetails_background-img {
+    min-height: 60vh;
+    background-image: url("/images/WebDesign/ViewMyCartBGImg.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    transition: all 0.7s ease;
+    position: relative;
+    z-index: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    section.orderDetails_background-img div.filter {
+        background-color: rgba(0, 0, 0, 0.4);
+        width: 100%;
+        min-height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+
+    section.orderDetails_background-img h1 {
+        color: #f8f8f8;
+        font-size: 4rem;
+        text-align: center;
+        margin: 0 1.5rem;
+        letter-spacing: 0.2rem;
+    }
+
+div.container div h1 {
+    margin-top: 2.5rem;
 }

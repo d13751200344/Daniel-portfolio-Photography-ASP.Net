@@ -52,10 +52,10 @@
                     @Html.DisplayFor(modelItem => item.PaymentMethod)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Cart.Id)
+                    @Html.DisplayFor(modelItem => item.Id)
                 </td>
                 <td>
-                    <a class="btn btn-secondary" asp-action="OrderDetails" asp-route-userId="@item.UserId" asp-route-orderId="@item.Id">Details</a>
+                    <a class="btn btn-secondary" asp-action="OrderDetails" asp-route-Id="@item.Id">Details</a>
                 </td>
             </tr>
         }

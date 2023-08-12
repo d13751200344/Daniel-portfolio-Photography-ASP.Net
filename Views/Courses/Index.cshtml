@@ -5,8 +5,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>@ViewData["Title"]</h1>
 
+<section class="about_background-img">
+    <div class="filter"></div>
+
+    <h1>@ViewData["Title"]</h1>
+
+</section>
+
+
+<div class="container">
 
 @if (User.IsInRole("Administrator"))
 {    
@@ -64,3 +72,5 @@
 }
     </tbody>
 </table>
+
+</div>

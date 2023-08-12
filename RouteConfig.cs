@@ -5,9 +5,9 @@
         public static void ConfigureRoutes(IEndpointRouteBuilder app)
         {
             app.MapControllerRoute(
-                name: "about",
-                pattern: "about",
-                defaults: new { controller = "Home", action = "About" });
+                name: "contact",
+                pattern: "contact",
+                defaults: new { controller = "Home", action = "Contact" });
 
             app.MapControllerRoute(
                 name: "privacy",

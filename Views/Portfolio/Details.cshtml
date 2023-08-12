@@ -1,12 +1,17 @@
 ﻿@model Photography.Models.Gallery
 
 @{
-    ViewData["Title"] = "Photos of " + Model.GalleryName;
+    ViewData["Title"] = "Portfolios";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>@ViewData["Title"]</h1>
+@if(User.IsInRole("Administrator"))
+{
+<div class="container">
 
+<p>
+            <a class="btn btn-primary" asp-controller="Photos" asp-action="Create">Create New</a>
+</p>
 
 <table class="table">
     <thead>
@@ -36,16 +41,33 @@
                 @Html.DisplayFor(modelItem => item.Caption)
             </td>
             <td>
-                
                 <partial name="_PhotoImage" model="item" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Gallery.GalleryName)
             </td>
             <td>
-                <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                <a class="btn btn-warning" asp-controller="Photos" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                <a class="btn btn-danger" asp-controller="Photos" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+</div>
+}
+
+@if(!User.IsInRole("Administrator"))
+{
+    <div class="Wrapper">
+    <ul class="imgWrapper">
+        @foreach (var item in Model.Photos)
+        {
+            <li class="img">
+                <partial name="_PhotoImage" model="item" />
+            </li>   
+        }
+    </ul>
+    </div>
+}

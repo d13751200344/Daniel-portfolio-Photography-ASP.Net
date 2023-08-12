@@ -16,10 +16,16 @@
     ViewData["Title"] = "Cart Details for " + Model.User.Email;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<section class="viewMyCart_background-img">
+    <div class="filter"></div>
+    <h1>Cart</h1>
 
-<h1>@ViewData["Title"]</h1>
+</section>
 
-<div>
+
+<div class="container">
+    <div>
+    <h1>@ViewData["Title"]</h1>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -68,6 +74,7 @@
 </div>
 
 <div>
-    <a class="btn btn-success" asp-action="Checkout">Checkout</a>
+    <a class="btn btn-primary" asp-action="Checkout">Checkout</a>
     <a class="btn btn-secondary" asp-action="Index">Back to Courses</a>
+</div>
 </div>

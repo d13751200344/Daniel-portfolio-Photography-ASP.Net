@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -409,6 +410,24 @@ namespace Photography.Controllers
 
 
         // OrderDetails method
+        /*        [Authorize]
+                public async Task<IActionResult> OrderDetails(int id)
+                {
+                    // Get logged in user, if no such a user, assign null
+                    var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                    var order = await _context.Orders
+                        .Include(order => order.User)  //loads the related User entity associated with the order.
+                        .Include(order => order.Cart)
+                        .ThenInclude(cart => cart.CartItems)
+                        .ThenInclude(cartItem => cartItem.Course)
+                        .FirstOrDefaultAsync(order => order.UserId == userId && order.Id == id);
+
+                    if (order == null) return NotFound();
+
+                    return View(order);
+                }
+        */
         [Authorize]
         public async Task<IActionResult> OrderDetails(int id)
         {
@@ -420,13 +439,19 @@ namespace Photography.Controllers
                 .Include(order => order.Cart)
                 .ThenInclude(cart => cart.CartItems)
                 .ThenInclude(cartItem => cartItem.Course)
-                .FirstOrDefaultAsync(order => order.UserId == userId && order.Id == id);
+                .FirstOrDefaultAsync(order => order.Id == id);
 
             if (order == null) return NotFound();
 
+            // Check if the user is an administrator
+            if (!User.IsInRole("Administrator") && order.UserId != userId)
+            {
+                // User is not the owner and not an administrator, deny access
+                return Forbid();
+            }
+
             return View(order);
         }
-
 
 
         [Authorize]

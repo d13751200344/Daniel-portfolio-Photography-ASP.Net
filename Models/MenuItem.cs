@@ -10,5 +10,9 @@
 
         public bool? Authorized { get; set; }
         public List<string>? AllowedRoles { get; set; }
+
+
+        // In order to use /Details/1
+        public Dictionary<string, string> RouteValues { get; set; }
     }
 }

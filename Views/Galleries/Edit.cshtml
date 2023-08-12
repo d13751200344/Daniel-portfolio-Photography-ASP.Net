@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div class="container">
 <h1>@ViewData["Title"]</h1>
 
 <hr />
@@ -44,3 +45,5 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+</div>

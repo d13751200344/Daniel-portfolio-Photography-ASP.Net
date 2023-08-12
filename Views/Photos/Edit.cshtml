@@ -7,6 +7,7 @@
 
 <h1>@ViewData["Title"]</h1>
 
+<div class="container">
 @if (User.IsInRole("Administrator"))
 {
 
@@ -68,3 +69,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+</div>

@@ -5,7 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<div class="container">
+
+<h1>@ViewData["Title"]</h1>
 
 <div>
     <h4>Order</h4>
@@ -50,6 +52,13 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @{
+        if (User.IsInRole("Administrator"))
+        {
+            <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+        }
+    }
+    <a class="btn btn-secondary" asp-action="Index">Back to List</a>
+</div>
+
 </div>

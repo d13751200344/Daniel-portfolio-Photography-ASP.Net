@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Contact";
+}
+<!--
+<section class="contact_background-img">
+    <div class="filter"></div>
+
+    <h1>  ViewData["Title"]</h1>
+
+</section>
+-->
+<section class="contact_background-img">
+    <div class="filter"></div>
+    <div class="contact-content">
+        <div class="contact_intro">
+            <h1>@ViewData["Title"]</h1>
+            <h4>GET IN TOUCH WITH US</h4>
+            <p>
+                We will be happy to assist you. Please fill in the form, and we
+                will do our best to get back to you as soon as possible.
+            </p>
+        </div>
+        <div class="form">
+            <fieldset>
+                <form action="/Contact/SendEmail" method="post">
+                    <label for="name"></label>
+                    <input type="text"
+                           id="name"
+                           name="username"
+                           placeholder="FULL NAME"
+                           required />
+                    <label for="email"></label>
+                    <input type="email"
+                           id="email"
+                           name="email"
+                           placeholder="E-MAIL"
+                           required />
+                    <label for="phone"></label>
+                    <input type="text"
+                           id="phone"
+                           name="phone"
+                           placeholder="PHONE NUMBER"
+                           required />
+                    <label for="suggestion"></label>
+                    <textarea id="suggestion"
+                              name="suggestion"
+                              cols="30"
+                              rows="10"
+                              placeholder="YOUR MESSAGE"></textarea>
+                    <button>SEND</button>
+                </form>
+            </fieldset>
+        </div>
+    </div>
+</section>
+<div class="empty"></div>

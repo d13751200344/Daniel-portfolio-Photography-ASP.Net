@@ -1,8 +1,59 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
+<!--
+    <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+-->
+
+<main>
+    <section class="background-img style=" background-image: url(' /images/Home/design.jpg');">
+        <div class="filter"></div>
+        <div class="slider">
+            <h3>Joseph</h3>
+            <h3>Photography</h3>
+        </div>
+    </section>
+
+    <section class="aboutme">
+        <div class="container">
+            <p>Joseph Wu is a professional product, food, design, wedding and portrait photographer based in Taiwan. </p>
+            <p>With a deep knowledge and diverse career in commercial photography and advertising, he specializes in bright, detailed and vibrant imagery for publication, marketing and advertising campaigns.</p>
+            <p>Joseph has worked for several large and small scale companies from local to international levels. Joseph also works with small business on local levels to help companies reach their creative goals and improve their brand’s identity while still being mindful of advertising budgets.</p>
+        </div>
+    </section>
+</main>
+
+
+<script>
+    let topImg = document.querySelector("section.background-img");
+    let images = [
+        '/images/WebDesign/HomeDesign.jpg',
+        '/images/WebDesign/HomeFoods.jpg',
+        '/images/WebDesign/HomeHualian.jpg'
+    ];
+    let position = 0;
+
+    function updateBackgroundImage() {
+        topImg.style.backgroundImage = `url('${images[position]}')`;
+    }
+
+    setInterval(() => {
+        // Slide the next image in from the right edge
+        topImg.style.backgroundPosition = '100% center';
+
+        setTimeout(() => {
+            // Change the background image and reset the position
+            position = (position + 1) % images.length;
+            updateBackgroundImage();
+            topImg.style.backgroundPosition = '0% center';
+        }, 500); // Adjust the delay (milliseconds) as needed
+    }, 3000); // Interval for image change
+
+    // Initial call to set the initial background image
+    updateBackgroundImage();
+</script>
+

@@ -1,6 +1,18 @@
 ﻿@model Photography.Models.Order
 
 @{
+    if (!User.IsInRole("Administrator"))
+    {
+        <div class="alert alert-warning">
+            <p>Access denied.</p>
+        </div>
+
+        return;
+    }
+}
+
+
+@{
     ViewData["Title"] = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
