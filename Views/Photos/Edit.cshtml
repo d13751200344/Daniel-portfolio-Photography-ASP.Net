@@ -33,25 +33,7 @@
                     <span asp-validation-for="Caption" class="text-danger"></span>
                 </div>
                 <div class="form-group my-3">
-
-                    <div class="row">
-                        <!--create a row div-->
-                        <div class="col-sm-8">
-                            <!--assign 8/12 for file upload input-->
-                            <!--add a onchange event listener-->
-                            <label asp-for="Image" class="control-label"></label>
-                            <input type="file" asp-for="Image" class="form-control"
-                            onchange="previewImage(event)" />
-                            <span asp-validation-for="Image" class="text-danger"></span>
-                        </div>
-
-                        <div class="col-sm-4">
-                            <!--assign 4/12 for photo review-->
-                            <partial name="_PhotoImage" model="Model" />
-                        </div>
-
-                    </div>
-
+                        <partial name="_PhotoImage" model="Model" />
                 </div>
                 <div class="form-group my-3">
                     <input type="submit" value="Save" class="btn btn-primary" />

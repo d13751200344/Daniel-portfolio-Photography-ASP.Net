@@ -120,7 +120,7 @@ namespace Photography.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,GalleryId,Title,Caption")] Photo photo, IFormFile? Image)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,GalleryId,Title,Caption")] Photo photo)
         {
             if (id != photo.Id)
             {
@@ -131,8 +131,14 @@ namespace Photography.Controllers
             {
                 try
                 {
-                    photo.Image = await UploadPhoto(Image);
-                    _context.Update(photo);
+                    var existingPhoto = await _context.Photos.FindAsync(id);
+
+                    // Update non-image properties from the edited photo to the existing photo
+                    existingPhoto.Title = photo.Title;
+                    existingPhoto.Caption = photo.Caption;
+                    existingPhoto.GalleryId = photo.GalleryId;
+
+                    _context.Update(existingPhoto);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -146,11 +152,15 @@ namespace Photography.Controllers
                         throw;
                     }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["GalleryId"] = new SelectList(_context.Gallery, "Id", "GalleryName", photo.GalleryId);
             return View(photo);
         }
+
+
 
         // GET: Photos/Delete/5
         public async Task<IActionResult> Delete(int? id)
