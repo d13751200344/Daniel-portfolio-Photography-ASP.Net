@@ -529,3 +529,8 @@ section.orderDetails_background-img {
 div.container div h1 {
     margin-top: 2.5rem;
 }
+
+div.container {
+    min-height: 70vh;
+
+}
