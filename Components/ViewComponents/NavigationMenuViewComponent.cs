@@ -26,7 +26,6 @@ namespace Photography.Components.ViewComponents
                             } },
                 //new MenuItem { Controller = "Photos", Action = "Index", Label = "Photos", Authorized = true, AllowedRoles = new List<string> { "Administrator" }},
                 new MenuItem { Controller = "Courses", Action = "Index", Label = "Course"},
-                //new MenuItem { Controller = "Home", Action = "Contact", Label = "Contact"},
                 new MenuItem { Controller = "Home", Action = "Privacy", Label = "Privacy"},
                 new MenuItem { Controller = "Courses", Action = "ViewMyCart", Label = "Cart", Authorized = true },
                 new MenuItem { Controller = "Courses", Action = "Orders", Label = "My Orders", Authorized = true },
@@ -43,7 +42,7 @@ namespace Photography.Components.ViewComponents
                 {
                     Controller = "Portfolio",
                     Action = "Details",
-                    RouteValues = new Dictionary<string, string> { { "id", gallery.Id.ToString() } }, // Use the gallery index+1 as the id
+                    RouteValues = new Dictionary<string, string> { { "id", gallery.Id.ToString() } }, // for "/id"
                     Label = gallery.GalleryName,
                 });
             }
