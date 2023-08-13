@@ -33,7 +33,6 @@
                                 @foreach (var dropdownItem in menuItem.DropdownItems)
                                 {
                                     <li>
-
                                         <a class="dropdown-item" asp-controller="@dropdownItem.Controller" asp-action="@dropdownItem.Action" asp-all-route-data="@dropdownItem.RouteValues">@dropdownItem.Label</a>
                                       
                                     </li>

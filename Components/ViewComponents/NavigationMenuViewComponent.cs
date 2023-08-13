@@ -24,13 +24,22 @@ namespace Photography.Components.ViewComponents
                         DropdownItems = new List<MenuItem>
                             {
                             } },
-                //new MenuItem { Controller = "Photos", Action = "Index", Label = "Photos", Authorized = true, AllowedRoles = new List<string> { "Administrator" }},
                 new MenuItem { Controller = "Courses", Action = "Index", Label = "Course"},
                 new MenuItem { Controller = "Home", Action = "Privacy", Label = "Privacy"},
                 new MenuItem { Controller = "Courses", Action = "ViewMyCart", Label = "Cart", Authorized = true },
                 new MenuItem { Controller = "Courses", Action = "Orders", Label = "My Orders", Authorized = true },
                 new MenuItem { Controller = "Courses", Action = "AllOrders", Label = "All Orders", Authorized = true, AllowedRoles = new List<string> { "Administrator" } },
             };
+
+            if (User.IsInRole("Administrator"))
+            {
+                menuItems[2].DropdownItems.Add(new MenuItem
+                {
+                    Controller = "Photos",
+                    Action = "Index",
+                    Label = "All Photos",
+                });
+            }
 
 
             var galleries = _dbContext.Gallery.ToList(); // Retrieve the list of galleries

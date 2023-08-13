@@ -147,6 +147,7 @@ div.container {
 
 section.aboutme div p {
     padding: 10px;
+    font-size: 1.2rem;
 }
 section.aboutme div p:last-child {
     margin-bottom: 50px;
@@ -532,5 +533,5 @@ div.container div h1 {
 
 div.container {
     min-height: 70vh;
-
+    padding-bottom: 20px;
 }

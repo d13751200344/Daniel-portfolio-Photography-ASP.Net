@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using Photography.Models;
 
 namespace Photography.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class PhotosController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,6 +22,7 @@ namespace Photography.Controllers
         }
 
         // GET: Photos
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Photos
@@ -59,6 +62,7 @@ namespace Photography.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Create([Bind("Id,GalleryId,Title,Caption")] Photo photo, IFormFile? Image)
         {
             if (ModelState.IsValid)
@@ -74,6 +78,7 @@ namespace Photography.Controllers
             return View(photo);
         }
 
+        [Authorize(Roles = "Administrator")]
         private async Task<string> UploadPhoto(IFormFile Image)
         {
             // GTFO ASAP Principle
@@ -99,6 +104,7 @@ namespace Photography.Controllers
 
 
         // GET: Photos/Edit/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Photos == null)
@@ -120,6 +126,7 @@ namespace Photography.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,GalleryId,Title,Caption")] Photo photo)
         {
             if (id != photo.Id)
@@ -163,6 +170,7 @@ namespace Photography.Controllers
 
 
         // GET: Photos/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Photos == null)
