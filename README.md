@@ -1,4 +1,3 @@
 # ASP.Net-Project
-This website enables a photographer to promote services and the courses he can offer, and people can contact him through the information on the website. 
-Also, customers can purchase courses by e-commerce system and log-in service.  
-Moreover, the owner of the website can edit the contents, such as photos, galleries, and courses on the website.
+This website enables a photographer to promote services and the courses he can offer, and people can contact him through the information on the website.
+It includes features such as service promotion, course offerings, and contact information. Additionally, it supports e-commerce functionalities and user authentication. The backend database for this project utilizes Azure SQL Database and SQL Server Management Studio (SSMS) or Microsoft SQL Server (MSSQL) with SSMS. This setup allows the website owner to manage and edit content, including photos, galleries, and courses, directly through the website interface, ensuring seamless data integration and efficient management.
